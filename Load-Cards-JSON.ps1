@@ -5,6 +5,10 @@ param (
 )
 # Usage:
 #
+# [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+# [Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+# $OutputEncoding           = [System.Text.Encoding]::UTF8
+#
 # $anr = (.\Load-Cards-JSON.ps1 .\cards.json).cards
 # $onr = (.\Load-Cards-JSON.ps1 .\onr-cards.json)
 #
@@ -18,12 +22,17 @@ param (
 #   Janaína “JK” Dumont Kindelán
 #   …
 # 
-# $anr  |  
+# @(  $anr  |  ForEach-Object { $_.title.Trim() }  )  |  Sort-Object -Unique  |  Out-File  -Encoding UTF8  -FilePath .\card-names.txt   ;   Get-Content -Raw  -Encoding UTF8  .\card-names.txt  |  more
+#
+#   "Clones Are Not People"
+#   …
+#   15 Minutes
+#   …
 # 
 # $anr  |  
 # 
 # $anr  |  
 #
 
-(Get-Content -Raw  -Path $File  |  ConvertFrom-Json)
+(Get-Content -Raw  -Encoding UTF8  -Path $File  |  ConvertFrom-Json)
 
