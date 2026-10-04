@@ -19,6 +19,9 @@ param (
 #
 #   Invoke-WebRequest -UseBasicParsing  -Uri "https://card-images.netrunnerdb.com/v2/xlarge/36005.webp"  -OutFile 36005.webp
 #
+# > $set = "01"  ;  2..113 | ForEach-Object { $card = "{0:d3}" -f $_  ;  .\NRDB-Fetch-Image.ps1 $set$card }
+#
+# 
 
 $ext = if ($size -eq "xlarge") { "webp" } else { "jpg" }
 
