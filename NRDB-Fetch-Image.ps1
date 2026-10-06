@@ -1,4 +1,4 @@
-param (
+﻿param (
 
  [Parameter(Position = 0, Mandatory = $true)]
  [ValidatePattern('^\d{5}$')]
@@ -19,7 +19,13 @@ param (
 #
 #   Invoke-WebRequest -UseBasicParsing  -Uri "https://card-images.netrunnerdb.com/v2/xlarge/36005.webp"  -OutFile 36005.webp
 #
-# > $set = "01"  ;  2..113 | ForEach-Object { $card = "{0:d3}" -f $_  ;  .\NRDB-Fetch-Image.ps1 $set$card }
+# > $sets = 1..13 + 21,22,23 + 26,30 + 33..36
+# 
+# # Magnum Opus:
+# > 23001,23011,23013,23027,23045,23054,23100  |  % {  .\nrdb-fetch-image.ps1 $_  ;  Start-Sleep -Seconds 10  }
+#
+# # Core:
+# > $set = "01"  ;  1..113 | ForEach-Object { $card = "{0:d3}" -f $_  ;  .\NRDB-Fetch-Image.ps1 $set$card  ;  Start-Sleep -Seconds 10 }
 #
 # 
 
@@ -36,7 +42,7 @@ New-Item -Force  -ItemType Directory  -Path $size
 Write-Host $file  -NoNewline -ForegroundColor yellow
 Write-Host "  <-  " $url  -ForegroundColor white
 
-Invoke-WebRequest -UseBasicParsing  -Uri $url  -OutFile $file
+Invoke-WebRequest -UseBasicParsing  -ErrorAction Stop  -Uri $url  -OutFile $file
 
 if ($?  -and  $size -eq "xlarge") {
 
@@ -44,4 +50,4 @@ if ($?  -and  $size -eq "xlarge") {
 
 }
 
-# 
+# NB. this file is encoded in "UTF-8 with BOM", for Powershell 5.

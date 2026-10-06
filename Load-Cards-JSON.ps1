@@ -26,13 +26,15 @@ param (
 #   title                : Janaína “JK” Dumont Kindelán
 #   …
 # 
-# @(  $anr  |  ForEach-Object { $_.title.Trim() }  )  |  Sort-Object -Unique  |  Out-File  -Encoding UTF8  -FilePath .\card-names.txt   ;   Get-Content -Raw  -Encoding UTF8  .\card-names.txt  |  more
+# @(  $anr  |  ForEach-Object { $_.title.Trim()  -replace '"([^"]*)"', '“$1”' }  )  |  Sort-Object -Unique
 #
 #   “Clones Are Not People”
 #   …
 #   15 Minutes
 #   …
 # 
+#  $SingleWordCardNames  =  @(  $anr  |  ForEach-Object { if ($_.title.Trim() -match "^\w+$") { $_.title.Trim() } })  |  Sort-Object -Unique   ;   $SingleWordCardNames
+#
 # $anr  |  
 # 
 # $anr  |  

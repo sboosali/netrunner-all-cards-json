@@ -1,20 +1,20 @@
-[CmdletBinding()]
-param(
-  [Parameter(Position = 0)]
-  [string]$Cards
-)
+
 
 # Usage:
 #
-# $anr | .\Write-Card-Names.ps1
+# .\Write-Card-Names.ps1
 #
 # 
 
+# "..." -> “...”
 
 function Munge-Title {
     param([string]$title)
 
-    return $title.Trim()  -replace '"([^"]*)"', '“$1”'
+    return $title.Trim().ToLower()  -replace '"([^"]*)"', '`u{201C}$1`u{201D}'
 }
 
-$Cards  |  ForEach-Object { Munge-Title $_.title }  |  Sort-Object -Unique  |  Out-File  -Encoding UTF8  -FilePath .\card-names.txt   ;   Get-Content -Raw  -Encoding UTF8  .\card-names.txt
+$anr  |  ForEach-Object { Munge-Title $_.title }  |  Sort-Object -Unique  |  Out-File  -Encoding UTF8  -FilePath .\card-names.txt
+
+Get-Content -Encoding UTF8  .\card-names.txt
+
